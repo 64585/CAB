@@ -1,0 +1,52 @@
+#include <iostream>
+#include <cmath>  // for ceil function
+
+// Function to calculate cab fare
+double calculateFare(double distance, int numPassengers, bool isAirportTrip) {
+    double fare = 5.0; // Minimum fare
+
+    // Additional charge based on distance
+    if (distance > 0) {
+        fare += std::ceil(distance * 1.8); // $1.80 per 1/10 mile
+    }
+
+    // Additional passenger charges
+    if (numPassengers > 1) {
+        fare += 1.0; // $1.00 for the first additional passenger
+        fare += (numPassengers - 2) * 0.5; // $0.50 for each additional passenger after the first
+    }
+
+    // Airport surcharge
+    if (isAirportTrip) {
+        fare += 2.0; // $2.00 airport surcharge
+    }
+
+    return fare; // Return the total fare
+}
+
+int main() {
+    double distance;
+    int numPassengers;
+    char airportChoice;
+
+    // Input distance
+    std::cout << "Enter distance (in tenths of a mile): ";
+    std::cin >> distance;
+
+    // Input number of passengers
+    std::cout << "Enter number of passengers: ";
+    std::cin >> numPassengers;
+
+    // Input whether trip is to/from airport
+    std::cout << "Is this trip going to/from the airport? (y/n): ";
+    std::cin >> airportChoice;
+    bool isAirportTrip = (airportChoice == 'y' || airportChoice == 'Y');
+
+    // Calculate fare
+    double fare = calculateFare(distance, numPassengers, isAirportTrip);
+
+    // Output the total fare
+    std::cout << "Total fare for the trip: $" << fare << std::endl;
+
+    return 0; // End of program
+}
